@@ -8,9 +8,10 @@ import astro from "eslint-plugin-astro"
 import astroParser from "astro-eslint-parser"
 import prettier from "eslint-config-prettier"
 import reactHooks from "eslint-plugin-react-hooks"
-import { globalIgnores } from "eslint/config"
+import mdx from "eslint-plugin-mdx"
+import { defineConfig, globalIgnores } from "eslint/config"
 
-export default tseslint.config([
+export default defineConfig([
   globalIgnores([
     "node_modules/",
     ".astro/",
@@ -21,10 +22,12 @@ export default tseslint.config([
     "package-lock.json",
   ]),
   {
-    files: ["**/*.{md,mdx}"],
+    files: ["**/*.md"],
     plugins: { markdown },
     extends: [markdown.configs.recommended],
   },
+  mdx.flat,
+  mdx.flatCodeBlocks,
   {
     files: ["**/*.json"],
     plugins: { json },
@@ -40,7 +43,10 @@ export default tseslint.config([
     files: ["**/*.{js,mjs,cjs,ts,mts,cts,jsx,tsx}"],
     languageOptions: { globals: { ...globals.browser } },
   },
-  tseslint.configs.recommended,
+  {
+    files: ["**/*.{js,mjs,cjs,ts,mts,cts,jsx,tsx}"],
+    extends: [tseslint.configs.recommended],
+  },
   {
     settings: {
       react: {
