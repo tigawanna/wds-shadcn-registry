@@ -8,6 +8,7 @@ import astro from "eslint-plugin-astro"
 import astroParser from "astro-eslint-parser"
 import prettier from "eslint-config-prettier"
 import reactHooks from "eslint-plugin-react-hooks"
+import mdx from "eslint-plugin-mdx"
 import { defineConfig, globalIgnores } from "eslint/config"
 
 export default defineConfig([
@@ -21,10 +22,12 @@ export default defineConfig([
     "package-lock.json",
   ]),
   {
-    files: ["**/*.{md,mdx}"],
+    files: ["**/*.md"],
     plugins: { markdown },
     extends: [markdown.configs.recommended],
   },
+  mdx.flat,
+  mdx.flatCodeBlocks,
   {
     files: ["**/*.json"],
     plugins: { json },
